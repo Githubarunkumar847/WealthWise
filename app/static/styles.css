@@ -1,0 +1,352 @@
+/* General Body and Page Styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #6b7b8c, #f4f7fa);  /* Subtle gradient background */
+  line-height: 1.8;
+  color: #333;
+  overflow-x: hidden;
+}
+
+/* Adding a subtle pattern background */
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://www.transparenttextures.com/patterns/diagonal-stripes.png') repeat;
+  opacity: 0.05;  /* Low opacity for a very subtle effect */
+  pointer-events: none;  /* Make sure this doesn't interfere with clicks */
+}
+
+/* Header Styles */
+header {
+  background: linear-gradient(45deg, #3498db, #2ecc71);  /* Smooth gradient for the header */
+  color: white;
+  padding: 20px 30px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 20px;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+header nav a:hover {
+  text-decoration: underline;
+}
+
+/* Main Content Styles */
+main {
+  padding: 40px;
+  max-width: 1200px;
+  margin: 40px auto;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(to bottom, #ffffff, #f9f9f9);  /* Light gradient for the main content */
+}
+
+/* Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+th, td {
+  padding: 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background-color: #3498db;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #f4f7fa;
+}
+
+tr:hover {
+  background-color: #e0f7fa;  /* Light blue hover effect for rows */
+  transform: scale(1.01);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Button Styles */
+button {
+  padding: 12px 25px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+  background-color: #2980b9;
+  transform: scale(1.05);
+}
+
+button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+/* Form Input Fields */
+input[type="text"], input[type="number"], select {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  width: 100%;
+  max-width: 280px;
+  background-color: #f9f9f9;
+  font-size: 14px;
+}
+
+input[type="text"]:focus, input[type="number"]:focus, select:focus {
+  border-color: #3498db;
+  outline: none;
+  background-color: #fff;
+}
+
+/* Default Layout for Laptop or Larger Screens */
+@media (min-width: 1024px) {
+  header {
+    padding: 30px 40px;
+  }
+
+  main {
+    padding: 40px;
+    max-width: 1200px;
+    margin: 40px auto;
+  }
+
+  table {
+    font-size: 16px;
+  }
+
+  .dashboard-title {
+    font-size: 28px;
+  }
+
+  .form-input, .form-select {
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .transaction-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .form-input, .form-select {
+    flex: 1;
+    max-width: 260px;
+  }
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  header {
+    padding: 20px;
+  }
+
+  main {
+    padding: 20px;
+  }
+
+  table {
+    font-size: 14px;
+  }
+
+  .dashboard-title {
+    font-size: 20px;
+  }
+
+  .form-input, .form-select {
+    width: 100%;
+  }
+}
+
+/* Transaction Form Styles */
+.transaction-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.form-input, .form-select {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  flex: 1;
+  max-width: 260px;
+}
+
+.form-button {
+  padding: 12px 25px;
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-button:hover {
+  background-color: #27ae60;
+}
+
+.delete-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 30px;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
+}
+
+.filter-form, .batch-delete-form {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter-form .form-input, .batch-delete-form .form-input {
+  margin-right: 15px;
+  padding: 10px;
+}
+
+/* Styled Footer */
+footer {
+  background-color: #34495e;
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Contact Developer Button */
+footer .contact-btn {
+  background-color: #3498db;  /* Button color */
+  color: white;
+  padding: 12px 25px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-top: 10px;
+  display: inline-block;
+}
+
+footer .contact-btn:hover {
+  background-color: #2980b9;  /* Button hover effect */
+  transform: scale(1.05);
+}
+
+/* Enhanced Interactive Features */
+button, .form-input, .form-select {
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover, .form-input:focus, .form-select:focus {
+  transform: scale(1.02);
+}
+
+/* Contact Developer Page Styles */
+.contact-page {
+  padding: 40px;
+  max-width: 900px;
+  margin: 40px auto;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.contact-page h2 {
+  font-size: 28px;
+  text-align: center;
+  color: #3498db;
+  margin-bottom: 20px;
+}
+
+.contact-page p {
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-form input[type="text"], .contact-form input[type="email"], .contact-form textarea {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  font-size: 14px;
+  width: 100%;
+}
+
+.contact-form textarea {
+  height: 150px;
+}
+
+.contact-form button {
+  padding: 12px 25px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-top: 20px;
+}
+
+.contact-form button:hover {
+  background-color: #2980b9;
+  transform: scale(1.05);
+}

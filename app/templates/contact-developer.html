@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Developer</title>
+  <!-- Correct path for static files using Flask's url_for function -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <header>
+    <h1>Contact Developer</h1>
+  </header>
+
+  <main>
+    <section id="contact-developer">
+      <h2>Get in Touch</h2>
+      <p>If you have any questions or feedback, feel free to reach out!</p>
+
+      <!-- Update action to match the Flask route and support form submission -->
+      <form action="{{ url_for('contact') }}" method="post" class="contact-form">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required />
+
+        <label for="email">Your Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required />
+
+        <label for="message">Your Message</label>
+        <textarea id="message" name="message" rows="5" placeholder="Type your message here..." required></textarea>
+
+        <button type="submit" class="submit-btn">Send Message</button>
+      </form>
+
+      <!-- Flash message display block -->
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="flash-messages">
+            {% for message in messages %}
+              <p>{{ message }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 All Rights Reserved | WealthWise</p>
+  </footer>
+</body>
+</html>

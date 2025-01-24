@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="dashboard-title">Dashboard</h2>
+
+<!-- Import Link -->
+<div class="import-link">
+  <a href="{{ url_for('upload_file') }}" class="import-button">Import</a>
+</div>
+
+<!-- Feedback Messages -->
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="feedback-messages">
+      {% for message in messages %}
+        <div class="feedback-message">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<!-- Filter Section -->
+<div class="filter-section">
+  <form action="{{ url_for('home') }}" method="GET" class="filter-form">
+      <input type="text" name="date" placeholder="Filter by Date (YYYY-MM-DD)" class="form-input">
+      <input type="text" name="category" placeholder="Filter by Category" class="form-input">
+      <button type="submit" class="form-button">Apply Filter</button>
+  </form>
+</div>
+
+<!-- Transactions Table -->
+<table class="transactions-table">
+  <thead>
+      <tr>
+          <th>Date</th>
+          <th>Category</th>
+          <th>Amount</th>
+          <th>Type</th>
+          <th>Action</th>
+      </tr>
+  </thead>
+  <tbody>
+      {% for transaction in transactions %}
+      <tr>
+          <td>{{ transaction.date }}</td>
+          <td>{{ transaction.category }}</td>
+          <td>{{ transaction.amount }}</td>
+          <td>{{ transaction.type }}</td>
+          <td>
+            <!-- Delete Button -->
+            <form action="{{ url_for('delete_transaction', transaction_id=transaction.id) }}" method="POST" style="display:inline;">
+                <button type="submit" class="delete-button">Delete</button>
+            </form>
+        </td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
+<!-- Batch Delete Form -->
+<div class="batch-delete-section">
+  <form action="{{ url_for('batch_delete') }}" method="POST" class="batch-delete-form">
+      <input type="text" name="date" placeholder="Delete by Date (YYYY-MM-DD)" class="form-input">
+      <input type="text" name="category" placeholder="Delete by Category" class="form-input">
+      <button type="submit" class="form-button">Delete Filtered Transactions</button>
+  </form>
+</div>
+<!-- Chart Section -->
+<div class="chart-section">
+  <h3>Income vs. Expense by Category</h3>
+  <canvas id="chart"></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Fetch chart data and initialize the chart
+  fetch('{{ url_for("chart_data") }}')
+    .then(response => response.json())
+    .then(data => {
+      var ctx = document.getElementById('chart').getContext('2d');
+      var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: data.categories,
+          datasets: [
+            {
+              label: 'Income',
+              data: data.income,
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1
+            },
+            {
+              label: 'Expense',
+              data: data.expense,
+              backgroundColor: 'rgba(255, 99, 132, 0.2)',
+              borderColor: 'rgba(255, 99, 132, 1)',
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    })
+    .catch(error => console.error('Error fetching chart data:', error));
+</script>
+
+<!-- Add Transaction Form -->
+<form action="{{ url_for('add_transaction') }}" method="POST" class="transaction-form">
+  {{ form.hidden_tag() }} <!-- CSRF Token -->
+  <input type="text" name="date" placeholder="Date (YYYY-MM-DD)" required class="form-input" value="{{ form.date.data }}">
+  <input type="text" name="category" placeholder="Category" required class="form-input" value="{{ form.category.data }}">
+  <input type="number" step="0.01" name="amount" placeholder="Amount" required class="form-input" value="{{ form.amount.data }}">
+  <select name="type" class="form-select" value="{{ form.type.data }}">
+      <option value="Income" {% if form.type.data == 'Income' %}selected{% endif %}>Income</option>
+      <option value="Expense" {% if form.type.data == 'Expense' %}selected{% endif %}>Expense</option>
+  </select>
+  <button type="submit" class="form-button">{{ form.submit() }}</button>
+</form>
+
+{% endblock %}
